@@ -8,7 +8,13 @@ public partial class DeviceInfoPage : ContentPage
     public DeviceInfoPage()
     {
         InitializeComponent();
-        var model = DeviceInfo.Model;
-        var platform = DeviceInfo.Platform.ToString();
+        DisplayDeviceInfo();
+    }
+
+    void DisplayDeviceInfo()
+    {
+        ModelLabel.Text = $"Model: {DeviceInfo.Model}";
+        PlatformLabel.Text = $"Platform: {DeviceInfo.Platform}";
+        VersionLabel.Text = $"Version: {DeviceInfo.Version}";
     }
 }

@@ -7,7 +7,10 @@ public partial class AppShell : Shell
     public AppShell()
     {
         InitializeComponent();
-        // Only one routes registered, you may have more to add
+        // Register all routes
         Routing.RegisterRoute("NewTaskPage", typeof(Views.NewTaskPage));
+        Routing.RegisterRoute("tasklist", typeof(Views.TaskListPage));
+        Routing.RegisterRoute("location", typeof(Views.LocationPage));
+        Routing.RegisterRoute("deviceinfo", typeof(Views.DeviceInfoPage));
     }
 }

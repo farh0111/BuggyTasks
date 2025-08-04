@@ -1,0 +1,14 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BuggyTasks.Views.DeviceInfoPage"
+             Title="Device Info">
+    <VerticalStackLayout Padding="20" Spacing="20">
+        <Label Text="Device Information" 
+               FontSize="24" 
+               HorizontalOptions="Center" 
+               Margin="0,0,0,20"/>
+        <Label x:Name="ModelLabel" Text="Model: " />
+        <Label x:Name="PlatformLabel" Text="Platform: " />
+        <Label x:Name="VersionLabel" Text="Version: " />
+    </VerticalStackLayout>
+</ContentPage> 

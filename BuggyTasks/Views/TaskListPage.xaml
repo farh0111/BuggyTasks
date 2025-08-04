@@ -1,15 +1,46 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BuggyTasks.ViewModels"
-             x:Class="BuggyTasks.Views.TaskListPage">
+             xmlns:models="clr-namespace:BuggyTasks.Models"
+             x:Class="BuggyTasks.Views.TaskListPage"
+             x:DataType="vm:TaskListViewModel"
+             Title="Task List">
     <ContentPage.BindingContext>
         <vm:TaskListViewModel />
     </ContentPage.BindingContext>
-    <ListView ItemsSource="{Binding Tasks}">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell Text="{Binding Title}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+    <Grid>
+        <ListView ItemsSource="{Binding Tasks}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:TaskItem">
+                    <ViewCell>
+                        <Grid Padding="15" ColumnDefinitions="*, Auto, Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="{Binding Title}" 
+                                       FontAttributes="Bold" 
+                                       TextColor="{Binding IsCompleted, Converter={StaticResource BoolToColorConverter}}" />
+                                <Label Text="{Binding Description}" 
+                                       FontSize="Small" 
+                                       TextColor="Gray" />
+                                <Label Text="{Binding CreatedDate, StringFormat='Created: {0:g}'}" 
+                                       FontSize="Small" 
+                                       TextColor="Gray" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" 
+                                    Text="Toggle" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TaskListViewModel}}, Path=ToggleTaskCommand}" 
+                                    CommandParameter="{Binding .}"
+                                    Margin="5,0" />
+                            <Button Grid.Column="2" 
+                                    Text="Delete" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TaskListViewModel}}, Path=DeleteTaskCommand}" 
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="Red"
+                                    TextColor="White"
+                                    Margin="5,0" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
 </ContentPage>

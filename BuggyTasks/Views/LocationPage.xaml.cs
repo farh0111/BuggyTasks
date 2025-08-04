@@ -13,15 +13,34 @@ public partial class LocationPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        GetLocation(); 
+        _ = GetLocationAsync(); 
     }
 
-    Task GetLocation()
+    async Task GetLocationAsync()
     {
-        var location =  Geolocation.GetLastKnownLocationAsync(); 
-        if (location != null)
+        try
         {
-            Console.WriteLine($"Lat: {location.Latitude}, Long: {location.Longitude}");
+            LocationLabel.Text = "Getting location...";
+            var location = await Geolocation.GetLastKnownLocationAsync(); 
+            if (location != null)
+            {
+                LocationLabel.Text = $"Latitude: {location.Latitude:F6}\nLongitude: {location.Longitude:F6}";
+                Console.WriteLine($"Lat: {location.Latitude}, Long: {location.Longitude}");
+            }
+            else
+            {
+                LocationLabel.Text = "Location not available";
+            }
         }
+        catch (Exception ex)
+        {
+            LocationLabel.Text = $"Error: {ex.Message}";
+            Console.WriteLine($"Error getting location: {ex.Message}");
+        }
+    }
+
+    async void OnRefreshLocation(object sender, EventArgs e)
+    {
+        await GetLocationAsync();
     }
 }
